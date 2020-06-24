@@ -1,0 +1,17 @@
+#!/usr/bin/perl
+# Your name and username@ucsc.edu
+use strict;
+use warnings;
+use Fcntl;
+use Fcntl qw(:DEFAULT :flock);
+
+sysopen(FD, "Makefile", O_RDONLY) or die "Can't open 'Makefile': $!";
+my @lines = <FD>;
+
+foreach my $line (@lines) {
+	my @values = split / /, $line;
+	if (($values[0] eq "#") or (scalar @values == 0)) {
+		next;
+	}
+	print($line);
+}

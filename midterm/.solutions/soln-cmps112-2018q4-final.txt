@@ -1,0 +1,218 @@
+$Id: soln-cmps112-2018q4-final.txt,v 1.7 2018-11-30 14:18:53-08 - - $
+Solution to cmps112-2018q4-final, page 1
+
+_________________________________________________________________
+Question 1(a). [2]
+
+(define (gcd x y)
+    (cond ((> x y) (gcd (- x y) y))
+          ((< x y) (gcd x (- y x)))
+          (else x)))
+
+_________________________________________________________________
+Question 1(b). [2]
+
+let rec gcd x y =
+    if x > y then gcd (x - y) y
+    else if x < y then gcd x (y - x)
+    else x;;
+
+_________________________________________________________________
+Question 1(c). [2]
+
+gcd( X, Y, Z ) :- X > Y, T is X - Y, gcd( T, Y, Z ).
+gcd( X, Y, Z ) :- X < Y, T is Y - X, gcd( X, T, Z ).
+gcd( X, X, X ).
+
+_________________________________________________________________
+Question 1(d). [2]
+
+sub gcd ($$) {
+   my ($x, $y) = @_;
+   while ($x != $y) {
+      if ($x > $y) {$x -= $y} else {$y -= $x}
+   }
+   return $x
+}
+
+_________________________________________________________________
+Question 1(e). [2]
+
+Integer extend [
+   gcd: other [
+      |x y|
+      x := self.
+      y := other.
+      [x ~= y] whileTrue: [
+         x > y ifTrue: [x := x - y]
+               ifFalse: [y := y - x]
+      ].
+      ^ x
+   ]
+].
+
+
+Solution to cmps112-2018q4-final, page 2
+
+_________________________________________________________________
+Question 2. [2]
+
+for file in *.in
+do
+   hzip.st -c $file $file.zipped
+done
+
+_________________________________________________________________
+Question 3(a). [2]
+
+let rec find cmp key list = match list with
+    | [] -> None
+    | (k,v)::xs -> if cmp key k then Some v
+                   else find cmp key xs;;
+
+_________________________________________________________________
+Question 3(b). [2]
+
+(define (find cmp key list)
+    (cond ((null? list) #f)
+          ((cmp key (caar list)) (cadar list))
+          (else (find cmp key (cdr list)))))
+
+_________________________________________________________________
+Question 3(c). [2]
+
+find( K, [pair(K,V)|_], V).
+find( K, [_|Tail], V) :- find( K, Tail, V).
+
+_________________________________________________________________
+Question 4. [2]
+
+Array extend [
+   innerprod: other [
+      self size = other size
+      ifFalse: [
+         ^ self error: 'innerprod different sizes'
+      ]
+      ifTrue: [
+         |sum|
+         sum := 0.
+         1 to: self size do: [:i|
+            sum := sum + (self at: i) * (other at: i)
+         ].
+         ^ sum
+      ]
+   ]
+]
+
+
+Solution to cmps112-2018q4-final, page 3
+
+_________________________________________________________________
+Question 5. [2]
+
+#!/usr/bin/perl
+while ($line = <>) {
+   $count += $& while $line =~ s/\d+//;
+}
+print $count, "\n";
+
+_________________________________________________________________
+Question 6. [1]
+
+reverse([],[]).
+reverse([H|T],L) :- reverse(T,[H|L]).
+
+_________________________________________________________________
+Question 7. [1]
+
+ls -la | grep 2016
+
+_________________________________________________________________
+Question 8. [2]
+
+posneg([],[],[]).
+posneg([H|T],[H|P],N) :- H > 0, posneg(T,P,N).
+posneg([H|T],P,[H|N]) :- H < 0, posneg(T,P,N).
+posneg([0|T],P,N) :- posneg(T,P,N).
+
+_________________________________________________________________
+Question 9. [2]
+
+(define (eval e)
+    (if (number? e) e
+        (apply (car e) (map eval (cdr e)))))
+
+_________________________________________________________________
+Question 10. [2]
+
+Array extend [
+   contains: predicate [
+      1 to: self size do: [:i|
+         (predicate value: (self at: i)) ifTrue: [^ true].
+      ].
+      ^ false
+   ]
+]
+
+
+Solution to cmps112-2018q4-final, page 4
+
+_________________________________________________________________
+Question 1(e). [2]
+
+Multiple choice.
+
+ 1.    (A) chmod +x hzip.st
+
+ 2.    (C) stat(2)
+
+ 3.    (A) Haskell
+
+ 4.    (B) <<
+
+ 5.    (A) float * float -> float
+
+ 6.    (C) \lambda-calculus
+
+ 7.    (E) unary, binary, keyword
+
+ 8.    (B) $ O ( 1 ) $ stack and $ O ( n ) $ time
+
+ 9.    (D) $ O ( n ) $ stack and $ O ( n ) $ time
+
+10.    (C) thread
+
+11.    (A) # comment
+
+12.    (A) Integer extend [ $...$ ].
+
+
+Solution to cmps112-2018q4-final, page 5
+
+Multiple choice.
+
+ 1.    (D) Smalltalk
+
+ 2.    (C) \s+
+
+ 3.    (C) #!/usr/bin/perl
+
+ 4.    (D) $a{$i}
+
+ 5.    (A) Ocaml
+
+ 6.    (D) @a
+
+ 7.    (B) %: %.c
+                   gcc $< -o $@
+
+ 8.    (D) foo >bar 2>&1
+
+ 9.    (C) let filter p z = [x | x <- z, p x]
+
+10.    (B) while ($line = <>)
+
+11.    (B) - : 'a -> 'a -> bool = <fun>
+
+12.    (D) universal parametric
+

@@ -1,0 +1,157 @@
+$Id: 2018q1-midterm.txt,v 1.3 2018-02-05 13:32:55-08 - - $
+Solution to cmps112-2017q4-midterm, page 1
+
+_________________________________________________________________
+Question 1(a). [2]
+
+(define (reverse list)
+        (define (rev in out)
+                (if (null? in) out
+                    (rev (cdr in) (cons (car in) out))))
+        (rev list '()))
+..... deduct 1 point if correct, but not tail recursive
+
+_________________________________________________________________
+Question 1(b). [2]
+
+let reverse list =
+    let rec rev inl outl = match inl with
+        | [] -> outl
+        | x::xs -> rev xs (x::outl)
+    in rev list []
+..... deduct 1 point if correct, but not tail recursive
+
+_________________________________________________________________
+Question 2. [2]
+
+reverse;;
+.................... val reverse : 'a list -> 'a list = <fun>
+
+(*);;
+.................... Warning: this is the start of a comment.
+
+1::2::3::[];;
+.................... - : int list = [1; 2; 3]
+
+let car = function x::_ -> x
+     | _ -> failwith "car";;
+.................... val car : 'a list -> 'a = <fun>
+
+_________________________________________________________________
+Question 3(a). [2]
+
+(define (fold_left fn unit list)
+    (if (null? list) unit
+        (fold_left fn (fn unit (car list)) (cdr list))))
+..... deduct 1 point if correct, but not tail recursive
+_________________________________________________________________
+Question 3(b). [2]
+
+let rec fold_left fn unit list = match list with
+    | [] -> unit
+    | x::xs -> fold_left fn (fn unit x) xs;;
+..... deduct 1 point if correct, but not tail recursive
+
+
+Solution to cmps112-2017q4-midterm, page 2
+
+_________________________________________________________________
+Question 4(a). [3]
+
+let rec find cmp key list = match list with
+    | [] -> None
+    | (k,v)::xs -> if cmp key k then Some v
+                   else find cmp key xs;;
+..... deduct 1 point if correct, but not tail recursive
+
+_________________________________________________________________
+Question 4(b). [3]
+
+(define (find cmp key list)
+    (cond ((null? list) #f)
+          ((cmp key (caar list)) (cadar list))
+          (else (find cmp key (cdr list)))))
+..... deduct 1 point if correct, but not tail recursive
+..... deduct 1/2 point if nested (if) instead of (cond)
+..... OK to use combinations of car/cdr instead of caar, cadar, etc.
+
+_________________________________________________________________
+Question 5. [3]
+
+let rec merge less ls1 ls2 = match ls1, ls2 with
+    | [], ls2 -> ls2
+    | ls1, [] -> ls1
+    | x::xs, y::ys -> 
+      if less x y then x :: merge less xs ls2
+                  else y :: merge less ls1 ys;;
+
+_________________________________________________________________
+Question 6. [1]
+
+let rec trim list = match list with
+    | [] -> []
+    | 0::xs -> trim xs
+    | list -> list;;
+..... deduct 1/2 point if correct, but not tail recursive
+..... note: this is not the same as the project function trim
+
+
+Solution to cmps112-2017q4-midterm, page 3
+
+_________________________________________________________________
+Question 7. [5]
+
+let sub' n1 n2 =
+    let rec sub'' n1 n2 borrow = match n1, n2, borrow with
+        | n1, [], 0 -> n1
+        | n1, [], borrow -> sub'' n1 [borrow] 0
+        | h1::t1, h2::t2, borrow ->
+          let diff = h1 - h2 - borrow
+          in  if diff < 0 then diff + 10 :: sub'' t1 t2 1
+                          else diff :: sub'' t1 t2 0
+        | _, _, _ -> failwith "sub'"
+     in trim (sub'' n1 n2 0);;
+..... do not deduct points for missing _,_,_-> pattern
+
+_________________________________________________________________
+Multiple choice.
+
+ 1.    (C) 25
+
+ 2.    (C) memory leak but not dangling pointers
+
+ 3.    (D) throw
+
+ 4.    (A) strong and dynamic
+
+ 5.    (A) curried
+
+
+Solution to cmps112-2017q4-midterm, page 4
+
+Multiple choice.
+
+ 1.    (C) fold_right
+
+ 2.    (B) ((lambda (a b) (+ a b)) 2 3)
+
+ 3.    (D) - : int -> int -> int = <fun>
+
+ 4.    (D) Scheme
+
+ 5.    (D) `(1 2 ,(+ 3 4))
+
+ 6.    (D) $ O ( 2 sup n ) $
+
+ 7.    (A) #!
+
+ 8.    (D) 2. +. 3.;;
+
+ 9.    (D) unary, binary, keyword
+
+10.    (C) Fortran
+
+11.    (A) (cons (car x) (cdr x))
+
+12.    (B) strong and static
+

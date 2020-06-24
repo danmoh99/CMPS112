@@ -1,0 +1,28 @@
+Name: Danyal Mohammad
+CruzId: dimohamm
+Email: dimohamm@ucsc.edu
+Student ID: 1586865
+Partner: Keyton Rogers
+Partner CruzID: jakroger
+Assignment: Assignment 5
+File: README
+
+This program was completed using pair programming.
+Partner: Danyal Mohammad (dimohamm@ucsc.edu)
+Partner: Keyton Rogers (jakroger@ucsc.edu)
+We acknowledge that each partner in a programming pair is
+responsible for the work performed by the other partner,
+and has been reviewed by both partners working together.
+Danyal Mohammad spent 3 hour working alone.
+Keyton Rogers spent 2 hours working alone.
+We spent 20 hours working together.
+Danyal Mohammad spent 10 hours driving.
+Keyton Rogers spent 10 hours driving.
+
+Assumptions made about functions.pl:
+Graders will have the database.pl file
+
+Known bugs:
+
+The functions.pl file to be graded was submitted by Danyal Mohammad
+$Id: README,v 1.4 2019-01-03 14:23:15-08 - - $

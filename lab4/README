@@ -1,0 +1,30 @@
+Name: Danyal Mohammad
+CruzId: dimohamm
+Email: dimohamm@ucsc.edu
+Student ID: 1586865
+Partner: Keyton Rogers
+Partner CruzID: jakroger
+Assignment: Assignment 4
+File: README
+
+This program was completed using pair programming.
+Partner: Danyal Mohammad (dimohamm@ucsc.edu)
+Partner: Keyton Rogers (jakroger@ucsc.edu)
+We acknowledge that each partner in a programming pair is
+responsible for the work performed by the other partner,
+and has been reviewed by both partners working together.
+Danyal Mohammad spent 2 hour working alone.
+Keyton Rogers spent 0 hours working alone.
+We spent 10 hours working together.
+Danyal Mohammad spent 5 hours driving.
+Keyton Rogers spent 5 hours driving.
+
+Assumptions made about pmake:
+-d was up to programmer implementation.
+
+Known bugs:
+Our subroutine resolver does not work exactly as expected 
+and therefore can cause unexpected results in test1-test5
+
+The pmake file to be graded were submitted by Keyton Rogers
+$Id: README,v 1.4 2019-01-03 14:23:15-08 - - $

@@ -1,0 +1,186 @@
+$Id: soln-2018q2-midterm.txt,v 1.2 2018-05-31 12:28:25-07 - - $
+Solution to cmps112-2017q4-midterm, page 1
+
+_________________________________________________________________
+Question 1. [1]
+
+|C++                |Cobol         |Fortran      |Lisp
+|Bjarne Stroustrup  |Grace Hopper  |John Backus  |John McCarthy
+3 or 4 correct = 1 pt; 2 correct = 1/2 pt; else 0.
+OK if only last names are given.
+
+_________________________________________________________________
+Question 2(a). [2]
+
+(define (reverse list)
+        (define (rev in out)
+                (if (null? in) out
+                    (rev (cdr in) (cons (car in) out))))
+        (rev list '()))
+Deduct 1 point if correct but no tail recursion.
+
+_________________________________________________________________
+Question 2(b). [2]
+
+let reverse list =
+    let rec rev inl outl = match inl with
+        | [] -> outl
+        | x::xs -> rev xs (x::outl)
+    in rev list []
+Deduct 1 point if correct but no tail recursion.
+
+_________________________________________________________________
+Question 3. [5]
+
+(define (add num1 num2)
+    (define (addc num1 num2 carry)
+        (cond ((and (null? num1) (= carry 0)) num2)
+              ((and (null? num2) (= carry 0)) num1)
+              ((null? num1) (addc (list carry) num2 0))
+              ((null? num2) (addc num1 (list carry) 0))
+              (else (let ((sum (+ (car num1) (car num2) carry)))
+                         (cons (remainder sum 10)
+                         (addc (cdr num1) (cdr num2)
+                               (floor (/ sum 10))))))))
+    (addc num1 num2 0))
+1/2 point = used cond, not a lot of nested ifs
+2 points = 1/2 point for each of the first 4 cases
+1/2 point = correctly computed the sum
+2 points = correct cons remainder floor division
+
+
+Solution to cmps112-2017q4-midterm, page 2
+
+_________________________________________________________________
+Question 4. [2]
+
+(apply + '(1 2 3))                  | 6
+(map (lambda (x) (+ x 5)) '(1 2 3)) | (6 7 8)
+
+List.fold_left (-) 0 [1;2;3;4];;    | - : int = -10
+List.map ((-)1) [1;2;3;4];;         | - : int list = [0; -1; -2; -3]
+
+For the ocaml answers, must specify both the type and the value.
+
+_________________________________________________________________
+Question 5. [2]
+
+normal order evaluation        | applicative order evaluation
+(\x. * x x) (+ 2 3)            | (\x. * x x ) (+ 2 3)
+   = (* (+ 2 3) (+ 2 3))       | (\x. * x x ) 5
+   = (* 5 5)                   | (* 5 5)
+   = 25                        | 25
+The second step gets the 1 point for each answer.
+More steps are OK too.
+
+_________________________________________________________________
+Question 6. [2]
+
+Parametric  - example something involving C++ templates,
+              Java generics, or Ocaml type parameters.
+Inclusion   - example involving inheritance, virtual functions,
+              or OOP, etc.
+
+_________________________________________________________________
+Question 7. [2]
+
+conversion  - example involving declaration of a function and
+              passing a parameter of a different type
+overloading - example showing multiple function declarations
+              given different types
+
+_________________________________________________________________
+Question 8. [2]
+
+let max gt list = match list with
+    | [] -> None
+    | x::xs -> let rec max' x xs = match xs with
+                   | [] -> x
+                   | y::ys -> max' (if gt x y then x else y) ys
+               in Some (max' x xs);;
+
+Other variations are possible, but must return None for an
+empty list otherwise the maximum.  Must not use the operator
+(>) in any way.  Use the gt parameter.
+
+
+Solution to cmps112-2017q4-midterm, page 3
+
+_________________________________________________________________
+Question 9. [2]
+
+let rec zipwith fn list1 list2 = match list1, list2 with
+    | [], [] -> []
+    | _, [] -> failwith "zipwith"
+    | [], _ -> failwith "zipwith"
+    | x::xs, y::ys -> fn x y :: zipwith fn xs ys;;
+Deduct 1 point if the length function is used.
+
+_________________________________________________________________
+Question 10(a). [2]
+
+let rec find cmp key list = match list with
+    | [] -> None
+    | (k,v)::xs -> if cmp key k then Some v
+                   else find cmp key xs;;
+Deduct 1 point if correct but no tail recursion.
+
+_________________________________________________________________
+Question 10(b). [2]
+
+(define (find cmp key list)
+    (cond ((null? list) #f)
+          ((cmp key (caar list)) (cadar list))
+          (else (find cmp key (cdr list)))))
+Deduct 1 point if correct but no tail recursion.
+
+_________________________________________________________________
+Question 11(a). [1]
+
+(define (sum list) (fold_left + 0 list))
+
+_________________________________________________________________
+Question 11(b). [1]
+
+let sum = fold_left (+) 0
+
+_________________________________________________________________
+Question 12(a). [1]
+
+(define (length list) (foldl (lambda (_ x) (+ x 1)) 0 list))
+
+_________________________________________________________________
+Question 12(b). [1]
+
+let length = List.fold_left (fun x _ -> x + 1) 0;;
+
+
+Solution to cmps112-2017q4-midterm, page 4
+
+Multiple choice.
+
+ 1.    (C) Multiple functions with the same name and different
+           signatures, defined in the same class.
+
+ 2.    (B) Haskell
+
+ 3.    (B) sqrt (2)
+
+ 4.    (C) int list -> int list
+
+ 5.    (D) throw
+
+ 6.    (B) 'a -> 'a -> bool
+
+ 7.    (A) ((7 8 9))
+
+ 8.    (B) (2 3)
+
+ 9.    (B) $x$ is bound and $y$ is free.
+
+10.    (D) int -> int -> int
+
+11.    (A) ('a -> 'b) -> 'a list -> 'b list
+
+12.    (A) 'a list -> 'a list
+

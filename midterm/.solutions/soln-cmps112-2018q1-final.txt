@@ -1,0 +1,198 @@
+$Id: 2018q1-midterm.txt,v 1.3 2018-02-05 13:32:55-08 - - $
+Solution to cmps112-2017q4-final, page 1
+
+_________________________________________________________________
+Question 1. [2]
+
+sum1 := [:a|            "one possible answer"
+   |s| s := 0.
+   a do: [:n| s := s + n].
+   s.
+].
+
+sum2 := [:a|            "alternate possible answer"
+   |s| s := 0.
+   1 to: a size do: [:i| s := s + (a at: i)].
+   s.
+].
+
+_________________________________________________________________
+Question 2(a). [2]
+
+let sum list =
+    let rec sum' list acc = match list with
+        | [] -> acc
+        | x::xs -> sum' xs (acc + x)
+    in sum' list 0
+
+_________________________________________________________________
+Question 2(b). [2]
+
+(define (sum list)
+        (define (summ list acc)
+                (if (null? list) acc
+                    (summ (cdr list) (+ (car list) acc))))
+        (summ list 0))
+
+_________________________________________________________________
+Question 2(c). [2]
+
+sum([],0).
+sum([H|T],N) :- sum(T,M), N is H + M.
+
+_________________________________________________________________
+Question 3(a). [1]
+
+let sumf = fold_left (+) 0
+
+_________________________________________________________________
+Question 3(b). [1]
+
+(define (sumf list) (fold_left + 0 list))
+
+
+Solution to cmps112-2017q4-final, page 2
+
+_________________________________________________________________
+Question 4. [2]
+
+|template <typename T>            | int i, j; string s, t;
+|class stack { }                  | i += j; s += t;
+|.... universal, parametric       |.... ad hoc, overloading
+
+|class B extends A {              | double add (double a, double b);
+|}                                | double x = add (3, 4);
+|.... universal, inclusion        |.... ad hoc, conversion
+
+_________________________________________________________________
+Question 5(a). [1]
+
+sister(X,X) :- !, fail.
+sister(Sister,X) :- female(Sister), parent(Y,Sister), parent(Y,X).
+
+_________________________________________________________________
+Question 5(b). [1]
+
+father(Father,Child) :- male(Father), parent(Father,Child).
+
+_________________________________________________________________
+Question 5(b). [1]
+
+grandmother(Grmother,Grchild) :-
+        female(Grmother), Parent(Grmother,X), Parent(X,Grchild).
+
+_________________________________________________________________
+Question 6. [3]
+
+Array extend [
+   findpos: value [
+      1 to: self size do: [:index|
+         (self at: index) = value ifTrue: [^ index]
+      ].
+      ^ nil
+   ]
+].
+
+_________________________________________________________________
+Question 7. [2]
+
+let rec fold_left fn unit list = match list with
+    | [] -> unit
+    | x::xs -> fold_left fn (fn unit x) xs;;
+
+
+Solution to cmps112-2017q4-final, page 3
+
+_________________________________________________________________
+Question 8. [2]
+
+let rec zip ls1 ls2 = match ls1, ls2 with
+    | [], _ -> []
+    | _, [] -> []
+    | x::xs, y::ys -> (x,y) :: zip xs ys;;
+
+_________________________________________________________________
+Question 9. [3]
+
+(define (zip ls1 ls2)
+        (if (or (null? ls1) (null? ls2)) '()
+            (cons (list (car ls1) (car ls2))
+                  (zip (cdr ls1) (cdr ls2)))))
+
+_________________________________________________________________
+Question 10. [2]
+
+chow_time( List ) :-
+   member( Diner, List ),
+   member( Dinner, List ),
+   eats( Diner, Dinner ).
+
+_________________________________________________________________
+Question 11. [3]
+
+(define (filter p? list)
+        (if (null? list) '()
+            (let ((a (car list))
+                  (d (cdr list)))
+                 (if (p? a) (cons a (filter p? d))
+                            (filter p? d)))))
+
+
+Solution to cmps112-2017q4-final, page 4
+
+Multiple choice.
+
+ 1.    (A) applicative
+
+ 2.    (D) nested functions
+
+ 3.    (B) - : float -> float = <fun>
+
+ 4.    (C) (apply + '(1 2 3 4))
+
+ 5.    (D) - : int -> bool = <fun>
+
+ 6.    (A) Corrado Böhm & Giuseppe Jacopini
+
+ 7.    (D) unification
+
+ 8.    (C) [x] = single, [y] = multiple
+
+ 9.    (B) print while <>;
+
+10.    (A) &&
+
+11.    (C) COBOL
+
+12.    (D) Smalltalk
+
+
+Solution to cmps112-2017q4-final, page 5
+
+Multiple choice.
+
+ 1.    (B) representing all generic parameters as objects,
+           and performing implicit casting operations.
+
+ 2.    (C) reachable
+
+ 3.    (B) 2 sqrt.
+
+ 4.    (D) map
+
+ 5.    (C) unit
+
+ 6.    (D) foo(bar,baz).
+
+ 7.    (D) static link
+
+ 8.    (B) 2
+
+ 9.    (C) 5
+
+10.    (A) ((a b) c: d)
+
+11.    (B) (cadr (1 2 3))
+
+12.    (C) yes
+

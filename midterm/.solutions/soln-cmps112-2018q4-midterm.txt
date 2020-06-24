@@ -1,0 +1,173 @@
+$Id: soln-cmps112-2018q4-midterm.txt,v 1.5 2018-11-02 13:27:23-07 - - $
+Solution to cmps112-2018q4-midterm, page 1
+
+_________________________________________________________________
+Question 1. [1]
+1 to: 1000 do: [:i | stdout << i << Character nl].
+
+_________________________________________________________________
+Question 2(a). [1]
+let sum = List.fold_left (+) 0
+let sum list = List.fold_left (+) 0 list
+........ either solution is OK
+
+_________________________________________________________________
+Question 2(b). [1]
+(define (sum list) (foldl + 0 list))
+
+_________________________________________________________________
+Question 3(a). [2]
+let fib n = 
+    let rec fib' n a b =
+        if n = 0 then a
+                 else fib' (n - 1) b (a + b)
+    in fib' n 0 1;;
+........ deduct 1 point if not tail recursive
+........ deduct 2 points if exponential time
+
+_________________________________________________________________
+Question 3(b). [2]
+(define (fib n)
+        (define (fibb n a b)
+                (if (= n 0) a
+                    (fibb (- n 1) b (+ a b))))
+        (fibb n 0 1))
+........ deduct 1 point if not tail recursive
+........ deduct 2 points if exponential time
+
+_________________________________________________________________
+Question 4. [1]
+long binetfib (long n) {
+   double root5 = sqrt (5);
+   double phi = (1 + root5) / 2;
+   double psi = (1 - root5) / 2;
+   double fib = (pow (phi, n) - pow (psi, n)) / root5;
+   return round (fib);
+}
+
+_________________________________________________________________
+Question 5. [2]
+sum2 := [:a|
+   |s| s := 0.
+   1 to: a size do: [:i| s := s + (a at: i)].
+   s.
+].
+
+
+Solution to cmps112-2018q4-midterm, page 2
+
+_________________________________________________________________
+Question 6. [1]
+|class bar extends foo {        |class stack<Item> {            |
+|}                              |}                              |
+|universal, inclusion           |universal, parametric          |
+
+|void f (int i) {               |int value = 6;                 |
+|void f (String s) {            |double sq = Math.sqrt (value); |
+|ad hoc, overloading            |ad hoc, conversion             |
+
+_________________________________________________________________
+Question 7(a). [3]
+(define (max gt list)
+    (define (maxx big listt)
+        (if (null? listt) big
+            (let ((a (car listt))
+                  (d (cdr listt)))
+                 (if (gt big a) (maxx big d)
+                                (maxx a d)))))
+    (if (null? list) #f 
+        (maxx (car list) (cdr list))))
+
+_________________________________________________________________
+Question 7(b). [2]
+let max gt list = match list with
+    | [] -> None
+    | x::xs -> let rec max' x xs = match xs with
+                   | [] -> x
+                   | y::ys -> max' (if gt x y then x else y) ys
+               in Some (max' x xs);;
+
+_________________________________________________________________
+Question 8. [2]
+let maxfl gt list = match list with
+    | [] -> None
+    | x::xs -> Some (List.fold_left
+                     (fun n m -> if gt n m then n else m)
+                     x xs);;
+
+_________________________________________________________________
+Question 9. [2]
+let rec fold_left fn unit list = match list with
+    | [] -> unit
+    | x::xs -> fold_left fn (fn unit x) xs;;
+
+
+Solution to cmps112-2018q4-midterm, page 3
+
+_________________________________________________________________
+Question 10. [2]
+List.map;;                    |- : ('a -> 'b) -> 'a list -> 'b list
+(+) 1;;                       |- : int -> int
+1::2::3::[];;                 |- : int list = [1; 2; 3]
+let car = function x::_ -> x  |val car : 'a list -> 'a
+    | _ -> failwith "car";;
+
+_________________________________________________________________
+Question 11(a). [3]
+(define (zipwith error fn list1 list2)
+    (cond ((null? list1) (if (null? list2) '() error))
+          ((null? list2) error)
+          (else (let ((tail (zipwith error fn (cdr list1) (cdr list2))))
+                     (if (eqv? error tail) error
+                         (cons (fn (car list1) (car list2)) tail))))))
+
+_________________________________________________________________
+Question 11(b). [3]
+let rec zipwith fn list1 list2 = match list1, list2 with
+    | [], [] -> []
+    | _, [] -> failwith "zipwith"
+    | [], _ -> failwith "zipwith"
+    | x::xs, y::ys -> fn x y :: zipwith fn xs ys;;
+
+_________________________________________________________________
+Question 12. [2]
+struct node* reverse (struct node* head) {
+   struct node* newlist = NULL;
+   while (head != NULL) {
+      struct node* tmp = head;
+      head = head->link;
+      tmp->link = newlist;
+      newlist = tmp;
+   }
+   return newlist;
+}
+
+
+Solution to cmps112-2018q4-midterm, page 4
+
+Multiple choice.
+
+ 1.    (D) ~
+
+ 2.    (B) ^D
+
+ 3.    (B) (exit 1)
+
+ 4.    (B) find $cmps-112 -name foobar.sbir
+
+ 5.    (B) $PATH
+
+ 6.    (C) Mapping a unary function onto a list.
+
+ 7.    (C) [3 + 4] value.
+
+ 8.    (C) 5
+
+ 9.    (D) (cddr '(1 2 3))
+
+10.    (C) 2.0 sqrt
+
+11.    (D) int -> int -> int
+
+12.    (B) strong and static
+

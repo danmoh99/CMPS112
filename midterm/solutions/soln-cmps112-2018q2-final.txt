@@ -1,0 +1,211 @@
+$Id: soln-2018q2-final.txt,v 1.11 2018-06-07 17:11:32-07 - - $
+Solution to cmps112-2017q4-final, page 1
+
+_________________________________________________________________
+Question 1(a). [2]
+(define (fac n)
+        (define (facc nn mm)
+                (if (<= nn 1) mm
+                    (facc (- nn 1) (* nn mm))))
+        (if (< n 0) #f (facc n 1)))
+///Deduct 1 point if not tail recursive with an inner function.
+
+_________________________________________________________________
+Question 1(b). [2]
+let fac n =
+    let rec fac' n' a' =
+        if n' <= 1 then a'
+                   else fac' (n' - 1) (n' * a')
+    in if n < 0 then failwith "fac n | n < 0"
+                else fac' n 1
+///Deduct 1 point if not tail recursive with an inner function.
+
+_________________________________________________________________
+Question 1(c). [2]
+Number extend [
+   fac [
+      |f n|
+      n := self.
+      (n < 0) ifTrue: [^ nil]
+              ifFalse: [
+                 f := 1.
+                 [n > 1] whileTrue: [ f := f * n. n := n - 1 ].
+                 ^ f
+      ]
+   ]
+].
+
+_________________________________________________________________
+Question 1(d). [2]
+fac(N,_) :- N < 0, !, fail.
+fac(0,1).
+fac(N,M) :- A is N - 1, fac(A,B), M is N * B.
+
+_________________________________________________________________
+Question 2(a). [1]
+sum([],0).
+sum([H|T],N) :- sum(T,M), N is H + M.
+
+_________________________________________________________________
+Question 2(b). [1]
+length([],0).
+length([_|T],N) :- length(T,M), N is M + 1.
+
+
+Solution to cmps112-2017q4-final, page 2
+
+_________________________________________________________________
+Question 3(a). [2]
+let rec differentiate list = match list with
+    | [] -> []
+    | (_,0)::xs -> differentiate xs
+    | (coeff,expt)::xs -> (coeff *. float_of_int expt, expt - 1)
+                       :: differentiate xs;;
+
+_________________________________________________________________
+Question 3(b). [3]
+(define (differ poly)
+    (if (null? poly) '()
+        (let ((coeff (caar poly))
+              (expt (cadar poly))
+              (rest (cdr poly)))
+             (if (= 0 expt) (differ rest)
+                 (cons (list (* coeff expt) (- expt 1))
+                       (differ rest))))))
+
+_________________________________________________________________
+Question 4. [3]
+class counter {
+   private long count = 0;
+   public boolean stop = false;
+   synchronized void click () {
+      ++count;
+   }
+   synchronized long reset () {
+      long result = count;
+      count = 0;
+      return result;
+   }
+}
+///Deduct 1 point if the keyword synchronized is missing
+///in either place.
+
+_________________________________________________________________
+Question 5. [2]
+let rec merge less ls1 ls2 = match ls1, ls2 with
+    | [], ls2 -> ls2
+    | ls1, [] -> ls1
+    | x::xs, y::ys -> 
+      if less x y then x :: merge less xs ls2
+                  else y :: merge less ls1 ys;;
+
+
+Solution to cmps112-2017q4-final, page 3
+
+_________________________________________________________________
+Question 6(a). [2]
+arrow(a,b).  ///The facts may be listed in any arbitrary order.
+arrow(a,c).
+arrow(b,c).
+arrow(b,d).
+arrow(d,e).
+arrow(e,c).
+
+_________________________________________________________________
+Question 6(b). [2]
+ispath(A,_,B) :- arrow(A,B).
+ispath(A,Visited,B) :-
+   arrow(A,X),
+   not(member(X,Visited)),
+   ispath(X,[X|Visited],B).
+
+_________________________________________________________________
+Question 7(a). [1]
+(define (contains x list)
+        (if (null? list) #f
+            (or (= x (car list)) (contains x (cdr list)))))
+
+_________________________________________________________________
+Question 7(b). [1]
+contains(X,[X|_]).
+contains(X,[_|Y]) :- contains(X,Y).
+
+_________________________________________________________________
+Question 7(c). [1]
+let rec contains x list = match list with
+    | [] -> false
+    | car::cdr -> x = car || contains x cdr;;
+
+_________________________________________________________________
+Question 8. [3]
+pop [
+   |result|
+   result := array at: top.
+   top := top - 1.
+   ^ result.
+]
+push: item [
+   top := top + 1.
+   array at: top put: item
+]
+isempty [
+   ^ top = 0.
+]
+///The initialization given on the exam assumes that
+///push increases to and pop decreases it.
+
+
+Solution to cmps112-2017q4-final, page 4
+
+ 1.    (D) synchronized
+
+ 2.    (B) Runnable
+
+ 3.    (B)   7
+
+ 4.    (D) (7 8 9)
+
+ 5.    (C) (int * string) list
+
+ 6.    (A) (f '())
+
+ 7.    (A) strong and dynamic
+
+ 8.    (D) int -> int -> int
+
+ 9.    (A) find(X) :- guess(X), verify(X).
+
+10.    (B) M but not D
+
+11.    (C) (if #f 1 2)
+
+12.    (B) (+) 3 4;;
+
+
+Solution to cmps112-2017q4-final, page 5
+
+ 1.    (D) Perl
+
+ 2.    (B) fold_left
+
+ 3.    (A) in the closure of the root set
+
+ 4.    (B) ==
+
+ 5.    (D) a value: 3.
+
+ 6.    (D) foo(bar,baz).
+
+ 7.    (D) thunk
+
+ 8.    (C) A structure on the heap, used to hold variables of an outer
+           function when referenced by an inner function.
+
+ 9.    (A) val f : float -> float = <fun>
+
+10.    (B) Prolog
+
+11.    (C) p->vft->f(p,x,y);
+
+12.    (C) yes
+
